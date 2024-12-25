@@ -7,7 +7,6 @@
 <%@ page import="model.SeriesMovie" %>
 <%
     SeriesMovie seriesMovie = (SeriesMovie) request.getAttribute("seriesMovie");
-    int id = Integer.parseInt(request.getParameter("id"));
 %>
 <!DOCTYPE html>
 <html lang="en">
@@ -23,7 +22,7 @@
 
     <form action="series-movies" method="post" class="shadow p-4 rounded">
         <input type="hidden" name="action" value="update">
-        <input type="hidden" name="id" value="<%= id %>">
+        <input type="hidden" name="id" value="<%= seriesMovie.getSeriesMovieId() %>">
         <input type="hidden" name="movie_id" value="<%= seriesMovie.getId() %>">
         <div class="mb-3">
             <label for="title" class="form-label">Title</label>

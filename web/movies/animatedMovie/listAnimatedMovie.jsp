@@ -25,13 +25,13 @@
         <% if (animatedMovies != null && !animatedMovies.isEmpty()) { %>
             <% for (AnimatedMovie movie : animatedMovies) { %>
                 <tr>
-                    <td><%= movie.getId() %></td>
+                    <td><%= movie.getAnimatedMovieId()%></td>
                     <td><%= movie.getTitle() %></td>
                     <td><%= movie.getAnimationStudio() %></td>
                     <td><%= movie.getAgeRecommendation() %></td>
                     <td>
-                        <a href="animated-movies?action=edit&id=<%= movie.getId() %>" class="btn btn-warning btn-sm">Edit</a>                               
-                        <a href="animated-movies?action=delete&id=<%= movie.getId() %>" class="btn btn-danger btn-sm"
+                        <a href="animated-movies?action=edit&id=<%= movie.getAnimatedMovieId() %>" class="btn btn-warning btn-sm">Edit</a>                               
+                        <a href="animated-movies?action=delete&id=<%= movie.getAnimatedMovieId() %>" class="btn btn-danger btn-sm"
                             onclick="return confirm('Are you sure you want to delete this series movie?');">Delete
             
                         </a>

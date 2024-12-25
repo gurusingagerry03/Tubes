@@ -4,9 +4,12 @@
     Author     : ASUS
 --%>
 
-<%@ page import="java.util.List, model.SeriesMovie" %>
+<%@page import="java.util.List"%>
+<%@page import="java.util.ArrayList"%>
+<%@page import="model.SeriesMovie"%>
 <%
-    List<SeriesMovie> seriesMovies = (List<SeriesMovie>) request.getAttribute("seriesMovies");
+            List<SeriesMovie> seriesMovies = (List<SeriesMovie>) request.getAttribute("seriesMovies");
+
 %>
 <div class="mb-3 text-end">
     <a href="series-movies?action=create" class="btn btn-primary">Add New Series Movie</a>
@@ -26,14 +29,14 @@
         <% if (seriesMovies != null && !seriesMovies.isEmpty()) { %>
             <% for (SeriesMovie movie : seriesMovies) { %>
                 <tr>
-                    <td><%= movie.getId() %></td>
+                    <td><%= movie.getSeriesMovieId()%></td>
                     <td><%= movie.getTitle() %></td>
                     <td><%= movie.getGenre() %></td>
                     <td><%= movie.getSeason() %></td>
                     <td><%= movie.getEpisodeNumber() %></td>
                     <td>
-                        <a href="series-movies?action=edit&id=<%= movie.getId() %>" class="btn btn-warning btn-sm">Edit</a>                               
-                        <a href="series-movies?action=delete&id=<%= movie.getId() %>" class="btn btn-danger btn-sm"
+                        <a href="series-movies?action=edit&id=<%= movie.getSeriesMovieId() %>" class="btn btn-warning btn-sm">Edit</a>                               
+                        <a href="series-movies?action=delete&id=<%= movie.getSeriesMovieId() %>" class="btn btn-danger btn-sm"
                             onclick="return confirm('Are you sure you want to delete this series movie?');">Delete
             
                         </a>

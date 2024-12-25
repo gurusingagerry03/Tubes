@@ -10,15 +10,26 @@ package model;
  */
 
 
-public class SeriesMovie extends Movie {    
+public class SeriesMovie extends Movie {
+    private int seriesMovieId;    
     private int season;
     private int episodeNumber;
 
-    public SeriesMovie(int movieId, String title, int releaseYear, String genre, String director, int duration, double rating, int season, int episodeNumber) {
+    public SeriesMovie(int movieId, String title, int releaseYear, String genre, String director, int duration, double rating,int seriesMovieId, int season, int episodeNumber) {
         super(movieId, title, releaseYear, genre, director, duration, rating);
+        this.seriesMovieId = seriesMovieId;
         this.season = season;
         this.episodeNumber = episodeNumber;
     }
+
+    public int getSeriesMovieId() {
+        return seriesMovieId;
+    }
+
+    public void setSeriesMovieId(int seriesMovieId) {
+        this.seriesMovieId = seriesMovieId;
+    }
+    
     public int getSeason() {
         return season;
     }

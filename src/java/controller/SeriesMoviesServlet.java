@@ -20,6 +20,7 @@ import java.sql.SQLException;
 import java.sql.Statement;
 import java.util.ArrayList;
 import java.util.List;
+import javax.servlet.http.HttpSession;
 import model.Movie;
 
 /**
@@ -32,6 +33,11 @@ public class SeriesMoviesServlet extends HttpServlet {
     @Override
     protected void doGet(HttpServletRequest request, HttpServletResponse response)
             throws ServletException, IOException {
+        HttpSession session = request.getSession();
+        if (session.getAttribute("user") == null) {
+            response.sendRedirect("login.jsp");
+            return;
+        }
         String action = request.getParameter("action");
 
         if (action != null) {
@@ -54,6 +60,11 @@ public class SeriesMoviesServlet extends HttpServlet {
     @Override
     protected void doPost(HttpServletRequest request, HttpServletResponse response)
             throws ServletException, IOException {
+        HttpSession session = request.getSession();
+        if (session.getAttribute("user") == null) {
+            response.sendRedirect("login.jsp");
+            return;
+        }
         String action = request.getParameter("action");
 
         if (action != null) {
@@ -128,7 +139,7 @@ public class SeriesMoviesServlet extends HttpServlet {
             throws ServletException, IOException {
         int seriesMovieId = Integer.parseInt(request.getParameter("id"));
 
-        String query = "SELECT m.*, s.season, s.episode_number " +
+        String query = "SELECT m.*, s.series_movie_id, s.season, s.episode_number " +
                        "FROM movies m " +
                        "JOIN series_movies s ON m.movie_id = s.movie_id " +
                        "WHERE s.series_movie_id = ?";
@@ -149,6 +160,7 @@ public class SeriesMoviesServlet extends HttpServlet {
                             resultSet.getString("director"),
                             resultSet.getInt("duration"),
                             resultSet.getDouble("rating"),
+                            resultSet.getInt("series_movie_id"),
                             resultSet.getInt("season"),
                             resultSet.getInt("episode_number")
                     );
