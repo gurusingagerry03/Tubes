@@ -21,6 +21,7 @@ import java.sql.ResultSet;
 import java.sql.SQLException;
 import java.util.ArrayList;
 import java.util.List;
+import javax.servlet.http.HttpSession;
 
 /**
  *
@@ -31,6 +32,11 @@ public class MovieServlet extends HttpServlet {
     @Override
     protected void doGet(HttpServletRequest request, HttpServletResponse response)
             throws ServletException, IOException {
+        HttpSession session = request.getSession();
+        if (session.getAttribute("user") == null) {
+            response.sendRedirect("login.jsp");
+            return;
+        }
         String page = request.getParameter("page");
         
         if (page != null) {
@@ -52,6 +58,11 @@ public class MovieServlet extends HttpServlet {
 
     private void listAllMovies(HttpServletRequest request, HttpServletResponse response)
             throws ServletException, IOException {
+        HttpSession session = request.getSession();
+        if (session.getAttribute("user") == null) {
+            response.sendRedirect("login.jsp");
+            return;
+        }
         List<Movie> movies = new ArrayList<>();
         String query = "SELECT * FROM movies";
 
@@ -97,6 +108,7 @@ public class MovieServlet extends HttpServlet {
                         rs.getString("director"),
                         rs.getInt("duration"),
                         rs.getDouble("rating"),
+                        rs.getInt("series_movie_id"),
                         rs.getInt("season"),
                         rs.getInt("episode_number")
                 ));
@@ -112,7 +124,7 @@ public class MovieServlet extends HttpServlet {
     private void listAnimatedMovies(HttpServletRequest request, HttpServletResponse response)
             throws ServletException, IOException {
         List<AnimatedMovie> animatedMovies = new ArrayList<>();
-        String query = "SELECT m.*, a.animated_movie_id,a.animation_studio, a.age_recommendation " +
+        String query = "SELECT m.*,a.animated_movie_id, a.animated_movie_id,a.animation_studio, a.age_recommendation " +
                         "FROM movies m JOIN animated_movies a ON m.movie_id = a.movie_id";
 
         try (Connection conn = DatabaseConnection.getConnection();
@@ -128,6 +140,7 @@ public class MovieServlet extends HttpServlet {
                         rs.getString("director"),
                         rs.getInt("duration"),
                         rs.getDouble("rating"),
+                        rs.getInt("animated_movie_id"),
                         rs.getString("animation_studio"),
                         rs.getString("age_recommendation")
                 ));

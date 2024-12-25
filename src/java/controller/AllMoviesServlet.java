@@ -17,6 +17,7 @@ import java.sql.Connection;
 import java.sql.PreparedStatement;
 import java.sql.ResultSet;
 import java.sql.SQLException;
+import javax.servlet.http.HttpSession;
 
 /**
  *
@@ -29,6 +30,11 @@ public class AllMoviesServlet extends HttpServlet {
     @Override
     protected void doGet(HttpServletRequest request, HttpServletResponse response)
             throws ServletException, IOException {
+        HttpSession session = request.getSession();
+        if (session.getAttribute("user") == null) {
+            response.sendRedirect("login.jsp");
+            return;
+        }
         String action = request.getParameter("action");
 
         if (action.equals("edit")) {
@@ -41,6 +47,11 @@ public class AllMoviesServlet extends HttpServlet {
     @Override
     protected void doPost(HttpServletRequest request, HttpServletResponse response)
             throws ServletException, IOException {
+        HttpSession session = request.getSession();
+        if (session.getAttribute("user") == null) {
+            response.sendRedirect("login.jsp");
+            return;
+        }
         String action = request.getParameter("action");
 
         if (action.equals("create")) {

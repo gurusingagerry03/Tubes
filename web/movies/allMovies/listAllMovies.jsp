@@ -4,9 +4,10 @@
     Author     : ASUS
 --%>
 
-<%@ page import="java.util.List, model.Movie" %>
+<%@page import="java.util.ArrayList"%>
+<%@page import="model.Movie"%>
 <%
-    List<Movie> allMovies = (List<Movie>) request.getAttribute("movies");
+    ArrayList<Movie> allMovies = (ArrayList<Movie>) request.getAttribute("movies");
 %>
 <div>
    <div class="mb-3 text-end">
@@ -30,7 +31,7 @@
         <% if (allMovies != null && !allMovies.isEmpty()) { %>
             <% for (Movie movie : allMovies) { %>
                 <tr>
-                    <td><%= movie.getId() %></td>
+                    <td><%= movie.getId()%></td>
                     <td><%= movie.getTitle() %></td>
                     <td><%= movie.getReleaseYear() %></td>
                     <td><%= movie.getGenre() %></td>

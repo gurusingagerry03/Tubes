@@ -7,7 +7,6 @@
 <%@ page import="model.AnimatedMovie" %>
 <%
     AnimatedMovie animatedMovie = (AnimatedMovie) request.getAttribute("animatedMovie");
-    int id = Integer.parseInt(request.getParameter("id"));
 %>
 
 <!DOCTYPE html>
@@ -23,7 +22,7 @@
         <h1 class="text-center mb-4">Edit Animated Movie</h1>
         <form action="animated-movies" method="post" class="shadow p-4 rounded">
             <input type="hidden" name="action" value="update">
-            <input type="hidden" name="id" value="<%= id %>">
+            <input type="hidden" name="id" value="<%= animatedMovie.getAnimatedMovieId() %>">
             <input type="hidden" name="movie_id" value="<%= animatedMovie.getId() %>">
             <div class="mb-3">
                 <label for="title" class="form-label">Title</label>

@@ -19,6 +19,7 @@ import java.sql.SQLException;
 import java.sql.Statement;
 import java.util.ArrayList;
 import java.util.List;
+import javax.servlet.http.HttpSession;
 import model.Movie;
 
 
@@ -32,6 +33,11 @@ public class AnimatedMoviesServlet extends HttpServlet {
     @Override
     protected void doGet(HttpServletRequest request, HttpServletResponse response)
             throws ServletException, IOException {
+        HttpSession session = request.getSession();
+        if (session.getAttribute("user") == null) {
+            response.sendRedirect("login.jsp");
+            return;
+        }
         String action = request.getParameter("action");
 
         if (action != null) {
@@ -54,6 +60,11 @@ public class AnimatedMoviesServlet extends HttpServlet {
     @Override
     protected void doPost(HttpServletRequest request, HttpServletResponse response)
             throws ServletException, IOException {
+        HttpSession session = request.getSession();
+        if (session.getAttribute("user") == null) {
+            response.sendRedirect("login.jsp");
+            return;
+        }
         String action = request.getParameter("action");
 
         if (action != null) {
@@ -128,7 +139,7 @@ public class AnimatedMoviesServlet extends HttpServlet {
             throws ServletException, IOException {
         int animatedMovieId = Integer.parseInt(request.getParameter("id"));
 
-        String query = "SELECT m.*, a.animation_studio, a.age_recommendation " +
+        String query = "SELECT m.*,a.animated_movie_id, a.animation_studio, a.age_recommendation " +
                        "FROM movies m JOIN animated_movies a ON m.movie_id = a.movie_id " +
                        "WHERE a.animated_movie_id = ?";
 
@@ -148,6 +159,7 @@ public class AnimatedMoviesServlet extends HttpServlet {
                             resultSet.getString("director"),
                             resultSet.getInt("duration"),
                             resultSet.getDouble("rating"),
+                            resultSet.getInt("animated_movie_id"),
                             resultSet.getString("animation_studio"),
                             resultSet.getString("age_recommendation")
                     );
